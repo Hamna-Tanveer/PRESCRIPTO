@@ -10,6 +10,10 @@ export default function Navbar() {
     <>
       <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
         <img
+          onClick={() => {
+            navigate("/");
+            scrollTo(0, 0);
+          }}
           className="w-44 cursor-pointer"
           src={assets.logo}
           alt="loading..."
