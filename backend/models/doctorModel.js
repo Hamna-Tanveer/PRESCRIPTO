@@ -15,7 +15,7 @@ const doctorSchema = new mongoose.Schema(
     date: { type: Number, required: true },
     slots_booked: { type: Object, default: {} },
   },
-  { minimize: false }
+  { minimize: false } // agr defaul value empty object he tu ye line must likhni he
 );
 
 const doctorModel =
