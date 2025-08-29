@@ -1,7 +1,11 @@
-import React from "react";
+import Login from "./pages/Login";
 
 function App() {
-  return <div className="text-3xl text-red-400">App</div>;
+  return (
+    <div>
+      <Login />
+    </div>
+  );
 }
 
 export default App;
