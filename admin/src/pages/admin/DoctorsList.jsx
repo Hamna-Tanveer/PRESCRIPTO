@@ -4,7 +4,8 @@ import { AdminContext } from "../../context/AdminContext";
 import { useEffect } from "react";
 
 function DoctorsList() {
-  const { doctors, aToken, getAllDoctors } = useContext(AdminContext);
+  const { doctors, aToken, getAllDoctors, changeAvailabilty } =
+    useContext(AdminContext);
 
   useEffect(() => {
     if (aToken) {
@@ -31,7 +32,11 @@ function DoctorsList() {
               </p>
               <p className="text-zinc-600 text-sm">{item.speciality}</p>
               <div className="mt-2 flex items-center gap-1 text-sm">
-                <input type="checkbox" checked={item.available} />
+                <input
+                  onChange={() => changeAvailabilty(item._id)}
+                  type="checkbox"
+                  checked={item.available}
+                />
                 <p>Available</p>
               </div>
             </div>
