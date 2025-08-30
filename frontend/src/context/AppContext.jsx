@@ -6,6 +6,9 @@ export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
   const [doctors, setDoctors] = useState([]);
+  const [token, setToken] = useState(
+    localStorage.getItem("token") ? localStorage.getItem("token") : false
+  );
   const currencySymbol = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -22,14 +25,19 @@ const AppContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+
   const value = {
     currencySymbol,
     doctors,
+    token,
+    setToken,
+    backendUrl,
   };
 
   useEffect(() => {
     getAllDoctors();
   }, []);
+
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );

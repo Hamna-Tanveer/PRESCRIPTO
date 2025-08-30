@@ -1,11 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 
 export default function Navbar() {
+  const { token, setToken } = useContext(AppContext);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [token, setToken] = useState(true);
+
+  const logout = () => {
+    setToken(false);
+    localStorage.removeItem("token");
+  };
+
   return (
     <>
       <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
@@ -65,7 +72,7 @@ export default function Navbar() {
                   </p>
                   <p
                     onClick={() => {
-                      setToken(false);
+                      logout();
                     }}
                     className="hover:text-black cursor-pointer"
                   >
