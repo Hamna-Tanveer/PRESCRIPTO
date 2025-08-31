@@ -16,8 +16,8 @@ userRouter.post("/login", loginUser);
 userRouter.get("/get-profile", authUser, getUserProfile);
 userRouter.post(
   "/update-profile",
-  upload.single("image"),
   authUser,
+  upload.single("image"),
   updateProfile
 );
 export default userRouter;
