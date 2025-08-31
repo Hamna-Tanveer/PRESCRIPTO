@@ -64,4 +64,11 @@ const loginUser = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+//API to create user profile data
+const getUserProfile = async (req, res) => {
+  try {
+    const { userId } = req.body;
+  } catch (error) {}
+};
 export { registerUser, loginUser };
