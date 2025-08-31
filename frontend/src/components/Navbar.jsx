@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function Navbar() {
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -44,11 +44,11 @@ export default function Navbar() {
           </NavLink>
         </ul>
         <div className="flex items-center gap-4">
-          {token ? (
+          {token && userData ? (
             <div className="flex items-center gap-2 cursor-pointer group relative">
               <img
                 className="w-8 rounded-full"
-                src={assets.profile_pic}
+                src={userData.image}
                 alt="loading..."
               />
               <img className="w-2.5" src={assets.dropdown_icon} alt="" />
