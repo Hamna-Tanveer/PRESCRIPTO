@@ -125,7 +125,7 @@ const updateProfile = async (req, res) => {
 const bookAppointment = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log("userId:", userId);
+
     const { docId, slotDate, slotTime } = req.body;
     const docData = await doctorModel.findById(docId).select("-password");
     if (!docData.available) {
@@ -187,6 +187,43 @@ const listAppointment = async (req, res) => {
   }
 };
 
+//Api to cancel appointments
+const cancelAppointment = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { appointmentId } = req.body;
+
+    const appointmentData = await appointmentModel.findById(appointmentId);
+
+    // verify appointment user
+    if (appointmentData.userId != userId) {
+      return res.json({ success: false, message: "Unauthorized action" });
+    }
+
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
+
+    // releasing doctor slot
+
+    const { docId, slotDate, slotTime } = appointmentData;
+    const docData = await doctorModel.findById(docId);
+
+    let slots_booked = docData.slots_booked;
+    slots_booked[slotDate] = slots_booked[slotDate].filter(
+      (e) => e !== slotTime
+    );
+
+    const updatedData = await doctorModel.findByIdAndUpdate(docId, {
+      slots_booked,
+    });
+
+    return res.json({ success: true, message: "Appointment Cancelled!" });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
 export {
   registerUser,
   loginUser,
@@ -194,4 +231,5 @@ export {
   updateProfile,
   bookAppointment,
   listAppointment,
+  cancelAppointment,
 };
