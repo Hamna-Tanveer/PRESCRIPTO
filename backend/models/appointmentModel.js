@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import Schema from "mongoose";
 
-const appointmentSchema = new Schema({
+const appointmentSchema = new mongoose.Schema({
   userId: { type: String, require: true },
   docId: { type: String, require: true },
   slotDate: { type: String, require: true },
