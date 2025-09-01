@@ -156,7 +156,7 @@ const bookAppointment = async (req, res) => {
       docData,
       amount: docData.fees,
       slotTime,
-      slotTime,
+      slotDate,
       date: Date.now(),
     };
 
@@ -177,7 +177,8 @@ const bookAppointment = async (req, res) => {
 
 const listAppointment = async (req, res) => {
   try {
-    const userId = req.useId;
+    const userId = req.userId;
+
     const appointments = await appointmentModel.find({ userId });
     return res.json({ success: true, appointments });
   } catch (error) {
