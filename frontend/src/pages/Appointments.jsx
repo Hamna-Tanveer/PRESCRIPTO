@@ -23,7 +23,7 @@ export default function Appointments() {
     setdocInfo(docInfo);
   };
 
-  const geteAvailableSlots = async () => {
+  const getAvailableSlots = async () => {
     setDocSlots([]);
 
     //get current date
@@ -80,7 +80,9 @@ export default function Appointments() {
         //Increment current time by 30 minutes
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
-      setDocSlots((prev) => [...prev, timeSlots]);
+      if (timeSlots.length > 0) {
+        setDocSlots((prev) => [...prev, timeSlots]);
+      }
     }
   };
 
@@ -123,7 +125,7 @@ export default function Appointments() {
   }, [doctors, docId]);
 
   useEffect(() => {
-    geteAvailableSlots();
+    getAvailableSlots();
   }, [docInfo]);
 
   useEffect(() => {
@@ -144,7 +146,7 @@ export default function Appointments() {
           <div className="flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
             {/*---------Doctor Info: name ,degree and experience-----------*/}
             <p className="flex items-center gap-2 text-2xl font-medium text-gray-900">
-              {docInfo.name}{" "}
+              {docInfo.name}
               <img
                 className="w-5"
                 src={assets.verified_icon}
