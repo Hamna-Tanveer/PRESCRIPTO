@@ -1,5 +1,7 @@
 import express, { Router } from "express";
 import {
+  appointmentCancel,
+  appointmentComplete,
   docAppointments,
   doctorList,
   loginDoctor,
@@ -11,4 +13,6 @@ const doctorRouter = express.Router();
 doctorRouter.get("/list", doctorList);
 doctorRouter.post("/login", loginDoctor);
 doctorRouter.get("/appointments", authDoctor, docAppointments);
+doctorRouter.post("/appointment-complete", authDoctor, appointmentComplete);
+doctorRouter.post("/appointment-cancel", authDoctor, appointmentCancel);
 export default doctorRouter;
