@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
 import RelatedDoctors from "../components/RelatedDoctors";
 import { toast } from "react-toastify";
+
 import axios from "axios";
 export default function Appointments() {
   const { docId } = useParams();
@@ -110,6 +111,7 @@ export default function Appointments() {
       if (data.success) {
         toast.success(data.message);
         getAllDoctors();
+
         navigate("/my-appointments");
       } else {
         toast.error(data.message);
