@@ -16,7 +16,11 @@ connectCloudinary();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://prescripto-git-main-hamna-tanveers-projects.vercel.app/"],
+  })
+);
 
 //api endpoints
 app.use("/api/admin", adminRouter);
