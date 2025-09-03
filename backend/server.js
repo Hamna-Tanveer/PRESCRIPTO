@@ -18,7 +18,8 @@ connectCloudinary();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://prescripto-git-main-hamna-tanveers-projects.vercel.app/"],
+    origin: ["https://prescripto-lxu3.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
