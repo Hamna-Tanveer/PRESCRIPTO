@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { assets } from "../assets/assets.js";
 import { useContext } from "react";
 import { AdminContext } from "../context/AdminContext.jsx";
 import axios from "axios";
@@ -11,6 +10,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAToken, backendUrl } = useContext(AdminContext);
+  console.log(backendUrl);
   const { setDToken } = useContext(DoctorContext);
 
   const onSumbitHandler = async (e) => {
@@ -75,7 +75,7 @@ function Login() {
         </button>
         {state === "Admin" ? (
           <p>
-            Doctor Login?{" "}
+            Doctor Login?
             <span
               className="text-primary underline cursor-pointer"
               onClick={() => setState("Doctor")}
