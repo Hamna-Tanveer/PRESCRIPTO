@@ -43,9 +43,14 @@ app.use("/api/doctor", doctorRouter);
 app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => res.send("API WORKING ✅"));
-app.get("/health", (req, res) =>
-  res.json({ status: "OK", timestamp: new Date().toISOString() })
-);
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "Server is running",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development",
+  });
+});
 
 // Export for Vercel
 export default app;
