@@ -1,4 +1,4 @@
-import "dotenv/config";
+/*import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/mongodb.js";
@@ -33,4 +33,16 @@ app.get("/", (req, res) => {
   res.send("API WORKING");
 });
 
-app.listen(port, () => console.log(`Server started at ${port}`));
+app.listen(port, () => console.log(`Server started at ${port}`));*/
+// backend/server.js
+// backend/server.js
+// backend/server.js
+
+import app from "./app.js";
+
+const port = process.env.PORT || 4000;
+
+app.listen(port, () => {
+  console.log(`✅ Server is running on port ${port}`);
+  console.log(`🟢 Health check: http://localhost:${port}/health`);
+});
