@@ -1,29 +1,36 @@
 import app from "../backend/app.js";
 
-// Vercel ke liye serverless function
 export default async (req, res) => {
-  console.log("Request received:", req.method, req.url);
+  try {
+    console.log(`📨 ${req.method} ${req.url}`);
 
-  // Vercel environment mein hi database connect karein
-  if (process.env.VERCEL) {
-    try {
-      console.log("Attempting to connect to database...");
+    // For Vercel: Connect to DB inside the function handler
+    if (process.env.VERCEL) {
+      try {
+        // Dynamic imports for serverless compatibility
+        const connectDB = (await import("../backend/config/mongodb.js"))
+          .default;
+        const connectCloudinary = (
+          await import("../backend/config/cloudinary.js")
+        ).default;
 
-      // Dynamic import se database connection
-      const connectDB = (await import("../backend/config/mongodb.js")).default;
-      const connectCloudinary = (
-        await import("../backend/config/cloudinary.js")
-      ).default;
-
-      // Connection establish karein
-      await connectDB();
-      await connectCloudinary();
-      console.log("Database connected successfully");
-    } catch (error) {
-      console.error("Database connection failed:", error.message);
-      // Error log karein but request proceed karein
+        await connectDB();
+        connectCloudinary(); // No await since it's synchronous
+      } catch (dbError) {
+        console.error("Database connection warning:", dbError.message);
+        // Continue even if DB connection fails
+      }
     }
-  }
 
-  return app(req, res);
+    return app(req, res);
+  } catch (error) {
+    console.error("Server error:", error);
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message:
+        process.env.NODE_ENV === "production"
+          ? "Please try again later"
+          : error.message,
+    });
+  }
 };

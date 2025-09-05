@@ -39,10 +39,28 @@ app.listen(port, () => console.log(`Server started at ${port}`));*/
 // backend/server.js
 
 import app from "./app.js";
+import connectDB from "./config/mongodb.js";
+import connectCloudinary from "./config/cloudinary.js";
 
 const port = process.env.PORT || 4000;
 
-app.listen(port, () => {
-  console.log(`✅ Server is running on port ${port}`);
-  console.log(`🟢 Health check: http://localhost:${port}/health`);
-});
+// For local development only - connect to DB on server start
+async function startServer() {
+  try {
+    await connectDB();
+    connectCloudinary();
+
+    app.listen(port, () => {
+      console.log(`✅ Server is running on port ${port}`);
+      console.log(`🟢 Health check: http://localhost:${port}/health`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error.message);
+    process.exit(1);
+  }
+}
+
+// Start server only if not in Vercel environment
+if (!process.env.VERCEL) {
+  startServer();
+}
